@@ -4,7 +4,7 @@ global class PurgeRecordBatch implements Database.Batchable<sObject> {
     private PurgeRecordScheduler__mdt purgeRecordSettings;
     
     
-    private string getQueryString()
+    public string getQueryString()
     {
         if(purgeRecordSettings ==null){ return '';}
         String query='SELECT Id FROM ';
