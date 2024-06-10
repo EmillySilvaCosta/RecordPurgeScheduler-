@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QueryFilter__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>This is very important and required, that filter which records should be deleted</inlineHelpText>
+    <label>Query Filter</label>
+    <required>true</required>
+    <type>TextArea</type>
+</CustomField>
