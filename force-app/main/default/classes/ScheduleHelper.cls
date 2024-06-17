@@ -1,14 +1,15 @@
 public class ScheduleHelper {
-    public static Integer jobCountForTest = 0;
+    public static Integer jobCountForTest = 0; 
   
+    //construtor vazio
     public ScheduleHelper() {
     }
   
     public void scheduleIntoMinutesInterval(
-      Schedulable service,
-      Integer minuteInterval
+      Schedulable service, //interface para execução de classe agendada
+      Integer minuteInterval //valor inteiro com intervalo de minutos
     ) {
-      String cronExpression = ' * * * ?';
+      String cronExpression = ' * * * ?'; //expressão de horário exceto minutos
       Integer i = 0;
       String executionMinute = '';
       while (i < 60) {

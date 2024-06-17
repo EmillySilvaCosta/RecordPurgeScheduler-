@@ -4,5 +4,6 @@
     "**/bower_components": true,
     "**/.sfdx": true
   },
-  "vlocity.sfdxUsername": "karen.franco@gft.com"
+  "vlocity.sfdxUsername": "karen.franco@gft.com",
+  "salesforcedx-vscode-core.retrieve-test-code-coverage": true
 }
