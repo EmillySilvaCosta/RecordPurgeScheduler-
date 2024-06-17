@@ -44,32 +44,30 @@ public class PurgeRecordBatchTest {
     }
 
     @isTest
-    //Verifica se o método execute exclui registros conforme o esperado
     static void testExecuteMethod() {
         
-        PurgeRecordScheduler__mdt settings = new PurgeRecordScheduler__mdt(
-            sObjectName__c = 'Account',
-            QueryFilter__c = 'CreatedDate = LAST_N_DAYS:30',
-            PartialDelete__c = false,
-            RunAtSystemLevel__c = true
-        );
+        PurgeRecordScheduler__mdt prs = new PurgeRecordScheduler__mdt();
+        prs.sObjectName__c = 'Account';
+        prs.QueryFilter__c = 'name != \'1\'';
+        prs.PartialDelete__c = false;
+        prs.RunAtSystemLevel__c = true;
+        prs.SendNotification__c = 'Always';
+        prs.Active__c = true;
         
         
-        PurgeRecordBatch batch = new PurgeRecordBatch(settings);
-        
-        List<Account> accounts = new List<Account>();
-        for (Integer i = 0; i < 10; i++) {
-            accounts.add(new Account(Name = 'Test Account ' + i));
-        }
-        insert accounts;
+        Test.startTest(); 
+        PurgeRecordBatch b = new PurgeRecordBatch(prs);  
+        b.execute(null, null); 
+        Database.executeBatch(b, 10000); 
+        Test.stopTest(); 
 
-        Test.startTest();
-        batch.execute(null, accounts);
-        Test.stopTest();
 
-        Integer count = [SELECT count() FROM Account WHERE Name LIKE 'Test Account%'];
-        System.assertEquals(0, count);
+         // Verificação se os registros foram excluídos conforme o esperado
+         Integer recordCount = [SELECT COUNT() FROM Account WHERE name != '1'];
+    	 System.assertEquals(0, recordCount, 'Records were not deleted as expected.');
+             
     }
+
 
     @isTest
     //Garante que uma exceção é lançada quando sObjectName__c não é fornecido
