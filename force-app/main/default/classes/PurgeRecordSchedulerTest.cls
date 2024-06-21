@@ -57,7 +57,7 @@ public class PurgeRecordSchedulerTest {
  
         Test.startTest();
         // Chama o método start() da classe PurgeRecordScheduler com a lista simulada
-        PurgeRecordScheduler.start(mockSettingsList);
+        PurgeRecordScheduler.startTest(mockSettingsList);
         Test.stopTest();
         // Verifica se os agendamentos foram criados consultando a tabela CronTrigger do Salesforce
         Integer scheduledJobsCount = [SELECT count() FROM CronTrigger WHERE CronJobDetail.Name LIKE 'PurgeRecordScheduler%'];

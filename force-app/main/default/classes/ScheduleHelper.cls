@@ -17,17 +17,10 @@ public class ScheduleHelper {
           executionMinute = '0';
   
         executionMinute += i;
-  
-        System.schedule(
-          getServiceName(service) +
-          '  ' +
-          jobCountForTest +
-          executionMinute,
-          '0 ' +
-          executionMinute +
-          cronExpression,
-          service
-        );
+        jobCountForTest++; // Incrementa o contador global
+        //jobName nome que aparece no agendamento do schedule,  PurgeRecordScheduler 000
+        System.schedule(getServiceName(service) + '  ' +jobCountForTest +executionMinute,
+          '0 ' + executionMinute + cronExpression,service);
   
         i += minuteInterval;
   
