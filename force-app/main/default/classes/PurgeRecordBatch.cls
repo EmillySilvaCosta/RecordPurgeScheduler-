@@ -43,6 +43,25 @@ global class PurgeRecordBatch implements Database.Batchable<sObject> {
         }
     }    
     global void finish(Database.BatchableContext bc){
+      // Obtém o ID do AsyncApexJob que representa este trabalho em lote
+        // de Database.BatchableContext.
+        // Consulte o objeto AsyncApexJob para recuperar as informações do trabalho atual.
+        AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed,
+            TotalJobItems, CreatedBy.Email
+            FROM AsyncApexJob WHERE Id =
+            :bc.getJobId()];
+       
+        //Envie um e-mail para o remetente do trabalho Apex notificando a conclusão do trabalho.
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+       
+        String[] toAddresses = new String[] {a.CreatedBy.Email};
+       
+        mail.setToAddresses(toAddresses);
+        mail.setSubject('Apex Sharing Recalculation ' + a.Status);
+        mail.setPlainTextBody('The batch Apex job processed ' + a.TotalJobItems +' batches with '+ a.NumberOfErrors + ' failures.');
+       
+        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
         
+    }
+      
 	}
-}
